@@ -1,16 +1,65 @@
 ---
-
+// src/pages/index.astro
+import { Image } from 'astro:assets';
+import plmBackground from '../assets/PLMBlurredMainPg1.png';
+import plmLogo from '../assets/PLMLogo.webp';
+import '../styles/login.css';
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLM Welcome Page</title>
+    <link rel="icon" href={plmLogo.src} />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Segoe+UI&display=swap" rel="stylesheet">
+</head>
+<body style={`
+    background-image: url(${plmBackground.src});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+`}>
+
+<div class="login-card">
+    <div class="left-panel">
+        <Image src={plmLogo} alt="PLM Logo" class="logo" loading="eager"/>
+
+        <div class="branding-text">
+            <div class="filipino-name">PAMANTASAN NG</div>
+            <div class="filipino-name">LUNGSOD NG MAYNILA</div>
+            <div class="english-name">University of the City of Manila</div>
+        </div>
+
+        <p class="description">
+            This is a multi-user academic portal developed using Java Swing and a dedicated database.
+        </p>
+    </div>
+
+    <div class="right-panel">
+        <h2 class="welcome-text">Welcome!</h2>
+        <h1 class="login-title">LOG IN ACCOUNT</h1>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" id="email" placeholder="Email" aria-label="Email" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password" aria-label="Password" required>
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="btn-login">Log In</button>
+            </div>
+
+            <a href="/forgot-password" class="forgot-link">Forgot Password?</a>
+
+            <p id="errorMessage" style="display: none;"></p>
+        </form>
+    </div>
+</div>
+<script src="../scripts/login.ts"></script>
+</body>
 </html>

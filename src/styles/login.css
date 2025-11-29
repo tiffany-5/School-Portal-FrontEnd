@@ -1,0 +1,171 @@
+/* 1. RESET & VARIABLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --plm-gold: #B18819;
+    --plm-navy: #13153A;
+    --text-gray: #666666;
+    --error-red: #d32f2f;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* 2. BODY & LAYOUT */
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.fixed-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* 3. LOGIN CARD */
+.login-card {
+    background: white;
+    width: 850px;
+    height: 450px;
+    display: flex;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+/* 4. LEFT PANEL */
+.left-panel {
+    width: 350px;
+    border-right: 2px solid var(--plm-gold);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.logo { width: 150px; height: auto; margin-bottom: 15px; }
+.filipino-name { font-family: 'EB Garamond', serif; font-size: 20px; font-weight: bold; color: var(--plm-gold); line-height: 1.2; }
+.english-name { font-family: 'Century Gothic', sans-serif; font-size: 15px; color: var(--plm-navy); margin: 10px 0; }
+.description { font-size: 14px; color: #999; max-width: 250px; line-height: 1.4; }
+
+/* 5. RIGHT PANEL */
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 50px;
+    position: relative;
+}
+
+.welcome-text { font-family: 'EB Garamond', serif; text-align: center; font-size: 28px; font-weight: bold; color: var(--plm-gold); margin-bottom: 5px; }
+.login-title { font-family: 'Century Gothic', sans-serif; text-align: center; font-size: 30px; font-weight: bold; color: var(--plm-navy); margin: 0 0 30px 0; text-transform: uppercase; }
+
+/* 6. INPUTS & BUTTONS */
+.form-group { margin-bottom: 15px; width: 100%; }
+.password-wrapper { position: relative; width: 100%; }
+
+input {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    font-size: 14px;
+    border: 1px solid var(--plm-gold);
+    border-radius: 15px;
+    outline: none;
+    color: var(--text-gray);
+    transition: 0.3s;
+}
+
+input:focus { border-color: var(--plm-navy); color: black; }
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    color: var(--plm-navy);
+}
+
+.toggle-password:hover { opacity: 0.7; }
+
+.btn-container { display: flex; justify-content: center; margin-top: 10px; }
+
+.btn-login {
+    background-color: var(--plm-navy);
+    color: white;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-login:hover { background-color: #24286b; }
+
+.forgot-link { display: block; text-align: center; margin-top: 10px; color: var(--plm-navy); text-decoration: none; font-size: 14px; font-family: 'Century Gothic', sans-serif; }
+.forgot-link:hover { text-decoration: underline; }
+
+/* 7. ERROR STATES */
+#errorMessage {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: var(--error-red);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.input-error { border-color: var(--error-red) !important; color: var(--error-red); }
+.shake-animation { animation: shake 0.4s ease-in-out; }
+
+/* 8. MOBILE */
+@media (max-width: 900px) {
+    body { overflow-y: auto; align-items: center; padding: 20px 10px; }
+    .login-card { width: 90%; max-width: 350px; height: auto; flex-direction: column; margin: auto; }
+    .left-panel { width: 100%; border: none; padding: 30px 0 10px 0; justify-content: center; align-items: center; }
+    .logo { width: 100px; margin: 0; }
+    .branding-text, .filipino-name, .english-name, .description, .welcome-text { display: none; }
+    .right-panel { width: 100%; padding: 10px 30px 40px 30px; }
+    .login-title { font-size: 24px; margin: 0 0 20px 0; }
+    input { padding: 12px 40px 12px 12px; }
+    #errorMessage { bottom: 15px; }
+    body .fixed-background { background-attachment: scroll; }
+}

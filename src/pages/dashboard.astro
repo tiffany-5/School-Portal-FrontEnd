@@ -1,0 +1,207 @@
+---
+// --- 1. SIMULATED BACKEND DATA ---
+import plmLogo from "../assets/PLMLogo.webp";
+import "../styles/global.css";
+import { Image } from "astro:assets";
+
+const studentData = {
+    firstName: "Maria Cristina Antoinette",
+    lastName: "Dela Cruz",
+    studentId: "202390029",
+    college: "CISTM",
+    course: "BSCS 2-2",
+    status: "Irregular",
+    isEnrolled: true,
+    currentSemester: "School Year 2025-2026 First Semester.",
+    balance: 22156.00,
+    hasOverdueBalance: false,
+    gwa: 1.46,
+    progress: 53,
+    alerts: {
+        enrollment: true,
+        balance: true,
+        gwa: true,
+        home: true,
+        acads: true,
+        schedule: true,
+        menu: true
+    }
+};
+
+const formatCurrency = (val: number) => new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(val);
+---
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal Dashboard</title>
+    <link rel="icon" href={plmLogo.src} />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex justify-center h-screen overflow-hidden font-sans">
+
+<main
+        id="scroll-container"
+        class="w-full max-w-[420px] bg-white h-full shadow-2xl relative overflow-y-auto pb-24"
+>
+
+    <header class="relative bg-white px-4 pt-4 pb-6 shadow-md overflow-hidden min-h-[80px]">
+        <div class="relative z-20 flex items-center gap-3 pr-[10%]">
+            <div class="w-10 h-10 flex-shrink-0">
+                <Image
+                        src={plmLogo}
+                        alt="PLM Logo"
+                        class="w-full h-full object-contain"
+                        loading="eager"
+                />
+            </div>
+            <div class="flex flex-col justify-center">
+                <h1 class="text-[13px] font-bold text-plm-gold uppercase tracking-normal leading-tight drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                    Pamantasan ng Lungsod ng Maynila
+                </h1>
+                <p class="text-[11px] text-plm-navy font-medium leading-none mt-0.5">
+                    University of the City of Manila
+                </p>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full flex flex-col z-30">
+            <div class="h-1.5 bg-plm-navy"></div>
+            <div class="h-1.5 bg-[#991B1B]"></div>
+        </div>
+
+    </header>
+
+    <div class="p-6 space-y-6">
+
+        <div class="flex items-start gap-4">
+            <div class="w-20 h-20 bg-gray-300 rounded-md shadow-inner flex-shrink-0 overflow-hidden">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" alt="Student" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <h2 class="text-lg font-bold text-gray-900 leading-tight break-words font-sans">
+                    {studentData.lastName}, <br> {studentData.firstName}
+                </h2>
+                <div class="mt-1 text-xs text-gray-500 uppercase font-semibold tracking-wide">
+                    {studentData.status} <br>
+                    <span class="text-plm-navy font-bold">{studentData.course}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center space-y-2">
+            <p class="text-gray-600 font-bold text-sm">
+                Student ID No. <span class="font-mono text-lg text-black">{studentData.studentId}</span>
+            </p>
+
+            {studentData.isEnrolled ? (
+                    <div class="relative group">
+
+                        <button class="relative w-full bg-green-700 hover:bg-green-800 text-white py-2.5 rounded-lg shadow-sm flex flex-col items-center justify-center gap-0.5 active:scale-95 transition-all">
+
+                        <span class="flex items-center gap-2 font-bold text-base">
+                            <span>Enrolled</span>
+                        </span>
+
+                            <span class="text-[10px] text-green-200 font-medium flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Generate SER
+                        </span>
+
+                        </button>
+                    </div>
+            ) : (
+                    <div class="relative group">
+                        <div class="absolute -inset-0.5 bg-error-red rounded-lg blur opacity-50 animate-pulse"></div>
+
+                        <button class="relative w-full bg-error-red text-white py-3 px-6 rounded-lg font-bold shadow-lg flex justify-center items-center active:scale-95 transition-transform">
+                            <span class="flex items-center gap-2">
+                                Not Enrolled
+                            </span>
+                        </button>
+                        {studentData.alerts.enrollment && (
+                                <span class="absolute -top-2 -right-2 flex h-6 w-6">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-error-red opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-6 w-6 bg-error-red border-2 border-white items-center justify-center text-xs font-bold text-white">!</span>
+                            </span>
+                        )}
+                    </div>
+            )}
+
+            <p class="text-[11px] text-gray-500 font-medium pt-1">
+                {studentData.currentSemester}
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+
+            <div class={`relative rounded-xl p-4 shadow-md text-white ${studentData.hasOverdueBalance ? 'bg-plm-gold' : 'bg-plm-navy'}`}>
+                <div class="flex justify-between items-start mb-1">
+                    <span class="text-xs opacity-90 font-medium">Balance</span>
+                    <span class="text-xs opacity-75">&gt;</span>
+                </div>
+                <h3 class="text-xl font-bold">{formatCurrency(studentData.balance)}</h3>
+                {studentData.alerts.balance && (
+                        <div class="absolute -top-2 -right-2 bg-error-red w-5 h-5 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold">!</div>
+                )}
+            </div>
+
+            <div class="relative bg-plm-navy rounded-xl p-4 shadow-md text-white">
+                <div class="flex justify-between items-start mb-1">
+                    <span class="text-xs opacity-90 font-medium">GWA</span>
+                    <span class="text-xs opacity-75">&gt;</span>
+                </div>
+                <h3 class="text-xl font-bold">{studentData.gwa.toFixed(2)}</h3>
+                {studentData.alerts.gwa && (
+                        <div class="absolute -top-2 -right-2 bg-error-red w-5 h-5 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold">!</div>
+                )}
+            </div>
+
+            <div class="relative bg-plm-navy rounded-xl p-4 shadow-md text-white col-span-2">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium">Curriculum Progress</span>
+                    <span class="text-xs opacity-75">&gt;</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 h-3 bg-white/20 rounded-full overflow-hidden border border-white/30">
+                        <div class="h-full bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]" style={`width: ${studentData.progress}%`}></div>
+                    </div>
+                    <span class="text-sm font-bold">{studentData.progress}%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-1"></div>
+
+    </div>
+
+    <nav
+            id="bottom-nav"
+            class="fixed bottom-0 w-full max-w-[420px] bg-plm-navy h-16 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex items-center justify-around px-2 z-50 transition-transform duration-300 ease-in-out transform translate-y-0"
+    >
+        <button class="relative p-2 text-white transition-transform active:scale-90">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+            {studentData.alerts.home && <span class="absolute top-1 right-1 h-3 w-3 bg-error-red rounded-full border-2 border-plm-navy"></span>}
+        </button>
+
+        <button class="relative p-2 text-gray-400 hover:text-white transition-colors active:scale-90">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.7 10l8.3 4.5L20.3 10l-8.3-4.5L3.7 10zM12 22a6.995 6.995 0 01-7-4.46V12.1l7 3.82 7-3.82v5.44A6.995 6.995 0 0112 22z"/></svg>
+            {studentData.alerts.acads && <span class="absolute top-1 right-1 h-3 w-3 bg-error-red rounded-full border-2 border-plm-navy"></span>}
+        </button>
+
+        <button class="relative p-2 text-gray-400 hover:text-white transition-colors active:scale-90">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+            {studentData.alerts.schedule && <span class="absolute top-1 right-1 h-3 w-3 bg-error-red rounded-full border-2 border-plm-navy"></span>}
+        </button>
+
+        <button class="relative p-2 text-gray-400 hover:text-white transition-colors active:scale-90">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+            {studentData.alerts.menu && <span class="absolute top-1 right-1 h-3 w-3 bg-error-red rounded-full border-2 border-plm-navy"></span>}
+        </button>
+    </nav>
+
+</main>
+<script src="../scripts/navigation.ts"></script>
+</body>
+</html>

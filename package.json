@@ -9,7 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.2"
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.2",
+    "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",

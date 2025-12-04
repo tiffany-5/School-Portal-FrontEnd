@@ -1,9 +1,9 @@
 ---
-// src/pages/index.astro
+// src/pages/dashboard.astro
 import { Image } from 'astro:assets';
 import plmBackground from '../assets/PLMBlurredMainPg1.png';
 import plmLogo from '../assets/PLMLogo.webp';
-import '../styles/login.css';
+import "../styles/global.css";
 ---
 
 <!DOCTYPE html>
@@ -13,53 +13,85 @@ import '../styles/login.css';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLM Welcome Page</title>
     <link rel="icon" href={plmLogo.src} />
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Segoe+UI&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
 </head>
-<body style={`
-    background-image: url(${plmBackground.src});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-`}>
+<body
+        class="min-h-[100dvh] flex items-center justify-center p-5 overflow-hidden font-sans"
+        style={`background-image: url(${plmBackground.src}); background-size: cover; background-position: center; background-repeat: no-repeat;`}
+>
 
-<div class="login-card">
-    <div class="left-panel">
-        <Image src={plmLogo} alt="PLM Logo" class="logo" loading="eager"/>
+<div class="fixed inset-0 -z-10 bg-black/10"></div>
 
-        <div class="branding-text">
-            <div class="filipino-name">PAMANTASAN NG</div>
-            <div class="filipino-name">LUNGSOD NG MAYNILA</div>
-            <div class="english-name">University of the City of Manila</div>
+<div
+        id="loginCard"
+        class="bg-white w-[90%] max-w-[350px] lg:max-w-[850px] lg:h-[450px] flex flex-col lg:flex-row rounded-[15px] shadow-[0_10px_30px_rgba(0,0,0,0.3)] overflow-hidden transition-all duration-300"
+>
+
+    <div class="w-full lg:w-[350px] lg:border-r-2 lg:border-plm-gold flex flex-col justify-center items-center py-[30px] lg:p-5 text-center">
+
+        <Image src={plmLogo} alt="PLM Logo" class="w-[100px] lg:w-[150px] h-auto mb-[15px] lg:mb-[15px]" loading="eager"/>
+
+        <div class="hidden lg:block branding-text">
+            <div class="font-garamond text-[20px] font-bold text-plm-gold leading-[1.2]">PAMANTASAN NG</div>
+            <div class="font-garamond text-[20px] font-bold text-plm-gold leading-[1.2]">LUNGSOD NG MAYNILA</div>
+            <div class="font-century text-[15px] text-plm-navy my-2.5">University of the City of Manila</div>
         </div>
 
-        <p class="description">
+        <p class="hidden lg:block text-sm text-[#999] max-w-[250px] leading-[1.4]">
             This is a multi-user academic portal developed using Java Swing and a dedicated database.
         </p>
     </div>
 
-    <div class="right-panel">
-        <h2 class="welcome-text">Welcome!</h2>
-        <h1 class="login-title">LOG IN ACCOUNT</h1>
+    <div class="flex-1 flex flex-col justify-center px-[30px] pb-10 pt-2 lg:p-[50px] relative w-full">
 
-        <form id="loginForm">
-            <div class="form-group">
-                <input type="text" id="email" placeholder="Email" aria-label="Email" required>
+        <h2 class="hidden lg:block font-garamond text-center text-[28px] font-bold text-plm-gold mb-1.5">Welcome!</h2>
+
+        <h1 class="font-century text-center text-2xl lg:text-[30px] font-bold text-plm-navy mb-5 lg:mb-[30px] uppercase">LOG IN ACCOUNT</h1>
+
+        <form id="loginForm" class="w-full">
+            <div class="mb-[15px] w-full">
+                <input
+                        type="text"
+                        id="email"
+                        placeholder="Email"
+                        aria-label="Email"
+                        required
+                        class="w-full p-[10px] lg:pr-10 text-sm border border-plm-gold rounded-[15px] outline-none text-text-gray transition-all duration-300 focus:border-plm-navy focus:text-black"
+                >
             </div>
 
-            <div class="form-group">
-                <input type="password" id="password" placeholder="Password" aria-label="Password" required>
+            <div class="mb-[15px] w-full relative">
+                <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        aria-label="Password"
+                        required
+                        class="w-full p-[10px] pr-10 text-sm border border-plm-gold rounded-[15px] outline-none text-text-gray transition-all duration-300 focus:border-plm-navy focus:text-black"
+                >
+                <button type="button" class="absolute right-[15px] top-1/2 -translate-y-1/2 text-plm-navy hover:opacity-70 flex items-center">
+                </button>
             </div>
 
-            <div class="btn-container">
-                <button type="submit" class="btn-login">Log In</button>
+            <div class="flex justify-center mt-2.5">
+                <button
+                        type="submit"
+                        id="loginBtn"
+                        class="bg-plm-navy text-white px-[30px] py-2 border-none rounded-[15px] font-bold text-sm cursor-pointer transition-colors duration-300 hover:bg-[#24286b]"
+                >
+                    Log In
+                </button>
             </div>
 
-            <a href="/forgot-password" class="forgot-link">Forgot Password?</a>
+            <a href="/forgot-password" class="block text-center mt-2.5 text-plm-navy no-underline text-sm font-century hover:underline">
+                Forgot Password?
+            </a>
 
-            <p id="errorMessage" style="display: none;"></p>
+            <p id="errorMessage" class="hidden absolute bottom-[15px] lg:bottom-[25px] left-0 w-full text-center text-sm text-error-red font-sans"></p>
         </form>
     </div>
 </div>
+
 <script src="../scripts/login.ts"></script>
 </body>
 </html>
